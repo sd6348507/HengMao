@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">HengMao</string>
+
+    <string name="label_update_app_version">当前版本：</string>
+    <string name="label_update_net_version">最新版本：</string>
+    <string name="action_update_version">更新版本</string>
+    <string name="action_update_percent">%1$s %%</string>
+
+    <string name="network_unavailable_tip">网络连接不可用,请检查网络设置!</string>
+
+    <string name="label_confirm">确定</string>
+    <string name="label_cancel">取消</string>
+
+    <string name="label_action_retry">重试</string>
+
+    <string name="label_action_delete">删除</string>
+    <string name="label_action_cancel_delete">取消删除</string>
+
+    <string name="action_add">添加</string>
+    <string name="action_modify">修改</string>
+    <string name="action_search">搜索</string>
+    <string name="action_update">更新</string>
+    <string name="action_scan">扫描</string>
+    <string name="action_setting">设置</string>
+    <string name="action_continue">继续下载</string>
+    <string name="action_install">安装</string>
+    <string name="action_submit">提交</string>
+    <string name="action_clear">清空</string>
+    <string name="action_delete">删除</string>
+    <string name="action_wait">请等待</string>
+</resources>
