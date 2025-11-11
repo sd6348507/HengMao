@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.roemsoft.hengmao.ui.part_in.PartInViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tool="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/Widget.App.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_48"
+                android:elevation="@dimen/dp_4"
+                app:layout_scrollFlags="enterAlways">
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/color_activity_bg_gray"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_mid_h"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent=".5"/>
+
+            <EditText
+                android:id="@+id/code_et"
+                android:layout_width="@dimen/dp_140"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_8"
+                android:layout_marginStart="@dimen/dp_32"
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_16"
+                android:inputType="text"
+                android:autofillHints="@null"
+                android:hint="@string/label_code"
+                android:text="@={vm.code}"
+                android:textSize="@dimen/sp_12"
+                android:textColor="@color/color_text_black_primary"
+                android:imeOptions="actionDone"
+                android:background="@drawable/bg_item_input"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tool:ignore="LabelFor" />
+
+            <TextView
+                android:id="@+id/code_search_btn"
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="0dp"
+                android:layout_marginEnd="@dimen/dp_32"
+                android:gravity="center"
+                android:textSize="@dimen/sp_16"
+                android:text="@string/action_search"
+                android:textColor="@color/white"
+                android:background="@drawable/selector_color_primary"
+                app:layout_constraintTop_toTopOf="@id/code_et"
+                app:layout_constraintBottom_toBottomOf="@id/code_et"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:background="@color/divider"
+                app:layout_constraintTop_toBottomOf="@id/code_et"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <View
+                android:id="@+id/layout_storage"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_40"
+                app:layout_constraintTop_toBottomOf="@id/divider1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <TextView
+                style="@style/Item.AutoSizeText"
+                android:id="@+id/label_storage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:text="@string/label_storage"
+                app:layout_constraintTop_toTopOf="@id/layout_storage"
+                app:layout_constraintBottom_toBottomOf="@id/layout_storage"
+                app:layout_constraintLeft_toLeftOf="@id/layout_storage" />
+
+            <ImageView
+                android:id="@+id/img_storage_arrow"
+                android:layout_width="@dimen/dp_8"
+                android:layout_height="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_right_arrow"
+                app:layout_constraintTop_toTopOf="@id/layout_storage"
+                app:layout_constraintBottom_toBottomOf="@id/layout_storage"
+                app:layout_constraintRight_toRightOf="@id/layout_storage"/>
+
+            <TextView
+                android:id="@+id/storage"
+                style="@style/Item.AutoSizeText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_32"
+                android:layout_marginEnd="@dimen/dp_32"
+                android:text="@{vm.storage}"
+                app:layout_constraintTop_toTopOf="@id/layout_storage"
+                app:layout_constraintBottom_toBottomOf="@id/layout_storage"
+                app:layout_constraintLeft_toRightOf="@id/label_storage"
+                app:layout_constraintRight_toLeftOf="@id/img_storage_arrow"/>
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:background="@color/divider"
+                app:layout_constraintTop_toBottomOf="@id/layout_storage"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <View
+                android:id="@+id/layout_total"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_40"
+                app:layout_constraintTop_toBottomOf="@id/divider2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <TextView
+                android:id="@+id/label_total_num"
+                style="@style/Item.AutoSizeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:text="@string/label_total_num"
+                app:layout_constraintTop_toTopOf="@id/layout_total"
+                app:layout_constraintBottom_toBottomOf="@id/layout_total"
+                app:layout_constraintLeft_toLeftOf="@id/layout_total"/>
+
+            <TextView
+                android:id="@+id/total_num"
+                style="@style/Item.AutoSizeText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_32"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:text="@{vm.num}"
+                app:layout_constraintTop_toTopOf="@id/layout_total"
+                app:layout_constraintBottom_toBottomOf="@id/layout_total"
+                app:layout_constraintLeft_toRightOf="@id/label_total_num"
+                app:layout_constraintRight_toLeftOf="@id/guide_mid_h"/>
+
+            <TextView
+                android:id="@+id/label_total_qty"
+                style="@style/Item.AutoSizeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_16"
+                android:text="@string/label_total_qty"
+                app:layout_constraintTop_toTopOf="@id/layout_total"
+                app:layout_constraintBottom_toBottomOf="@id/layout_total"
+                app:layout_constraintLeft_toRightOf="@id/guide_mid_h"/>
+
+            <TextView
+                android:id="@+id/total_qty"
+                style="@style/Item.AutoSizeText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_32"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:text="@{vm.qty}"
+                app:layout_constraintTop_toTopOf="@id/layout_total"
+                app:layout_constraintBottom_toBottomOf="@id/layout_total"
+                app:layout_constraintLeft_toRightOf="@id/label_total_qty"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginEnd="@dimen/dp_16"
+                android:background="@color/divider"
+                app:layout_constraintTop_toBottomOf="@id/layout_total"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <include android:id="@+id/item_title"
+                layout="@layout/item_part_in_title"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_44"
+                android:layout_marginTop="@dimen/dp_4"
+                app:layout_constraintTop_toBottomOf="@id/divider3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:overScrollMode="never"
+                app:layout_constraintTop_toBottomOf="@id/item_title"
+                app:layout_constraintBottom_toTopOf="@id/label_save"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <TextView
+                android:id="@+id/label_save"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_48"
+                android:gravity="center"
+                android:text="@string/action_save"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/white"
+                android:background="@drawable/selector_bottom_btn"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

@@ -1,44 +1,48 @@
-package com.roemsoft.hengmao.ui.pjrk
+package com.roemsoft.hengmao.ui.part_in
 
-import android.content.Intent
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.OrientationHelper
 import com.roemsoft.hengmao.R
 import com.roemsoft.hengmao.base.DataBindingAppCompatActivity
 import com.roemsoft.hengmao.dialog.ProgressBarDialog
 import com.roemsoft.hengmao.hideSoftKeyboard
 import com.roemsoft.hengmao.onSingleClick
-import com.roemsoft.hengmao.widget.CustomerToast
 import com.roemsoft.hengmao.App
-import com.roemsoft.hengmao.databinding.ActivityPdrkBinding
+import com.roemsoft.hengmao.databinding.ActivityPartInBinding
+import com.roemsoft.hengmao.databinding.DialogPickStorageBinding
+import com.roemsoft.hengmao.dialog.BottomContainerDialog
+import com.roemsoft.hengmao.dialog.bottomContainerDialog
+import com.roemsoft.hengmao.dialog.showAlertDialog
+import com.roemsoft.hengmao.dpToPx
 import com.roemsoft.hengmao.showSoftKeyboard
-import com.roemsoft.hengmao.ui.search.StorageSearchActivity
-import com.roemsoft.hengmao.ui.search.customer.CustomerSearchActivity
-import com.roemsoft.hengmao.ui.search.hw.HwSearchActivity
-import com.roemsoft.hengmao.ui.search.spec.SpecSearchActivity
+import com.roemsoft.hengmao.widget.MarginItemDecoration
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import timber.log.Timber
 
-class PjRkActivity : DataBindingAppCompatActivity() {
+class PartInActivity : DataBindingAppCompatActivity() {
 
-    private val mBinding: ActivityPdrkBinding by binding(R.layout.activity_pdrk)
+    private val mBinding: ActivityPartInBinding by binding(R.layout.activity_part_in)
 
-    override val viewModel: PdRkViewModel by viewModels()
-
-    private lateinit var searchLauncher: ActivityResultLauncher<Intent>
+    override val viewModel: PartInViewModel by viewModels()
 
     private val dialog by lazy {
         ProgressBarDialog(this).build()
     }
+
+    private val bottomDialogBinding: DialogPickStorageBinding by lazy {
+        DataBindingUtil.inflate(layoutInflater, R.layout.dialog_pick_storage, null, false)
+    }
+    private lateinit var storageDialog: BottomContainerDialog
 
     override fun bindingView() {
         mBinding.vm = viewModel
@@ -47,41 +51,37 @@ class PjRkActivity : DataBindingAppCompatActivity() {
 
     @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     override fun initView() {
-        searchLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            when (result.resultCode) {
-                StorageSearchActivity.ACTION_SEARCH_STORAGE -> {
-                    viewModel.storage.value = result.data?.getParcelableExtra(
-                        StorageSearchActivity.RESULT_SELECTED)
+        storageDialog = bottomContainerDialog {
+            view = {
+                bottomDialogBinding.list.apply {
+                    adapter = viewModel.storageAdapter
+                    layoutManager = LinearLayoutManager(this@PartInActivity)
+                    addItemDecoration(MarginItemDecoration(dpToPx(1)))
                 }
-                HwSearchActivity.ACTION_SEARCH_HW -> {
-                    viewModel.hw.value = result.data?.getParcelableExtra(HwSearchActivity.RESULT_SELECTED)
+                bottomDialogBinding.cancel.onSingleClick {
+                    dismiss()
                 }
-                CustomerSearchActivity.ACTION_SEARCH_CUSTOMER -> {
-                    viewModel.customer.value = result.data?.getStringExtra(SpecSearchActivity.RESULT_SELECTED)
+                bottomDialogBinding.confirm.onSingleClick {
+                    viewModel.pickStorage()
+                    dismiss()
                 }
+                bottomDialogBinding.root
             }
         }
 
-        mBinding.storage.onSingleClick {
-            searchLauncher.launch(Intent(this, StorageSearchActivity::class.java))
-        }
-        mBinding.hw.onSingleClick {
-            if (viewModel.storage.value == null) {
-                CustomerToast(this, "先选择仓库", Toast.LENGTH_SHORT).show()
-                searchLauncher.launch(Intent(this, StorageSearchActivity::class.java))
-                return@onSingleClick
-            }
-            searchLauncher.launch(Intent(this, HwSearchActivity::class.java).putExtra(
-                HwSearchActivity.EXTRA_STORAGE_ID, viewModel.storage.value?.id ?: ""
-            ))
-        }
-        mBinding.customer.onSingleClick {
-            searchLauncher.launch(Intent(this, CustomerSearchActivity::class.java))
+        mBinding.list.apply {
+            adapter = viewModel.adapter
+            layoutManager = LinearLayoutManager(this@PartInActivity)
+            addItemDecoration(DividerItemDecoration(this@PartInActivity, OrientationHelper.VERTICAL))
         }
 
-        mBinding.submitBtn.onSingleClick {
+        mBinding.layoutStorage.onSingleClick {
+            viewModel.loadStorage()
+        }
+
+        /*mBinding.submitBtn.onSingleClick {
             viewModel.submit()
-        }
+        }*/
 
         mBinding.codeSearchBtn.onSingleClick {
             viewModel.fetchCodeInfo()
@@ -99,25 +99,10 @@ class PjRkActivity : DataBindingAppCompatActivity() {
             }
             true
         }
+    }
 
-        mBinding.customerEditable.onSingleClick {
-            mBinding.customerEditable.isSelected = !mBinding.customerEditable.isSelected
-            if (mBinding.customerEditable.isSelected) {
-                mBinding.customer.visibility = View.INVISIBLE
-                mBinding.customerEt.visibility = View.VISIBLE
-                mBinding.customerEt.apply {
-                    requestFocus()
-                    setSelection(mBinding.customerEt.length())
-                    showSoftKeyboard()
-                }
-            } else {
-                mBinding.customer.visibility = View.VISIBLE
-                mBinding.customerEt.visibility = View.INVISIBLE
-                mBinding.customerEt.apply {
-                    clearFocus()
-                }
-            }
-        }
+    override fun initData() {
+        viewModel.loadStorage()
     }
 
     override fun getToolbar(): Toolbar {
@@ -125,7 +110,7 @@ class PjRkActivity : DataBindingAppCompatActivity() {
     }
 
     override fun setToolTitle() {
-        mBinding.toolbarTitle.setText(R.string.label_pdrk)
+        mBinding.toolbarTitle.setText(R.string.label_part_in)
     }
 
     override fun setupEvent() {
@@ -139,6 +124,24 @@ class PjRkActivity : DataBindingAppCompatActivity() {
             }
         }
 
+        viewModel.showStorageDialog.observe(this) {
+            if (storageDialog.isShowing()) {
+                storageDialog.dismiss()
+            } else {
+                storageDialog.show()
+            }
+        }
+
+        viewModel.showDeleteDialog.observe(this) { code ->
+            showAlertDialog {
+                title = "删除"
+                content = "是否删除该条码所有数据？"
+                onConfirm = {
+                    viewModel.deleteCode(code)
+                }
+            }
+        }
+
         viewModel.searchCompleted.observe(this) {
             if (it) {
                 mBinding.codeEt.clearFocus()
@@ -148,6 +151,7 @@ class PjRkActivity : DataBindingAppCompatActivity() {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == App.KEY_SCAN_LEFT || keyCode == App.KEY_SCAN_RIGHT) {
+            viewModel.code.value = ""
             mBinding.codeEt.requestFocus()
         }
         return super.onKeyDown(keyCode, event)

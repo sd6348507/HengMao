@@ -28,13 +28,16 @@
 
     <style name="Item.AutoSizeText" parent="">
         <item name="android:autoSizeTextType">uniform</item>
-        <item name="android:autoSizeMaxTextSize">@dimen/sp_20</item>
+        <item name="android:autoSizeMaxTextSize">@dimen/sp_16</item>
         <item name="android:autoSizeMinTextSize">@dimen/sp_12</item>
-        <item name="android:autoSizeStepGranularity">@dimen/sp_2</item>
-        <item name="android:paddingTop">@dimen/dp_4</item>
-        <item name="android:paddingBottom">@dimen/dp_4</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:textColor">@color/color_text_black_primary</item>
+        <item name="android:autoSizeStepGranularity">1sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Item.AutoSizeText.Small" parent="Item.AutoSizeText">
+        <item name="android:autoSizeMaxTextSize">@dimen/sp_12</item>
+        <item name="android:autoSizeMinTextSize">@dimen/sp_10</item>
+        <item name="android:lineSpacingMultiplier">1.3</item>
     </style>
 
     <style name="Item.AutoSizeText.Title" parent="Item.AutoSizeText">

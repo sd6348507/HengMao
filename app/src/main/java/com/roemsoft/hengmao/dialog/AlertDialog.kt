@@ -15,6 +15,7 @@ class AlertDialog(context: Context) {
     private val mDialog by lazy { Dialog(context, R.style.Theme_App_Dialog_Alert) }
     private val mDialogView by lazy { LayoutInflater.from(context).inflate(R.layout.dialog_alert, null, false) }
 
+    var title: String = ""
     var content: String = ""
     var onConfirm: (() -> Unit)? = null
     var onCancel: (() -> Unit)? = null
@@ -34,6 +35,7 @@ class AlertDialog(context: Context) {
             }
         }
 
+        mDialogView.findViewById<TextView>(R.id.dialog_alert_title).text = title
         mDialogView.findViewById<TextView>(R.id.dialog_alert_content).text = content
         mDialogView.findViewById<TextView>(R.id.dialog_alert_cancel).setOnClickListener {
             onCancel?.invoke()

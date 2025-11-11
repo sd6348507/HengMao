@@ -1,6 +1,23 @@
 <resources>
     <string name="app_name">HengMao</string>
 
+    <string name="label_part_in">配件入库</string>
+
+    <string name="label_code">条码号</string>
+    <string name="label_storage">仓库</string>
+    <string name="label_total_num">扫描件数</string>
+    <string name="label_total_qty">扫描数量</string>
+
+    <string name="label_part_in_ino">指令号</string>
+    <string name="label_part_in_model_no">模具号</string>
+    <string name="label_part_in_bom_no">款号</string>
+    <string name="label_part_in_code">条码</string>
+    <string name="label_part_in_sole">配件</string>
+    <string name="label_part_in_color">颜色</string>
+    <string name="label_part_in_size">尺码</string>
+    <string name="label_part_in_qty">数量</string>
+    <string name="label_part_in_action">操作</string>
+
     <string name="label_update_app_version">当前版本：</string>
     <string name="label_update_net_version">最新版本：</string>
     <string name="action_update_version">更新版本</string>
@@ -10,6 +27,8 @@
 
     <string name="label_confirm">确定</string>
     <string name="label_cancel">取消</string>
+    <string name="label_yes">是</string>
+    <string name="label_no">否</string>
 
     <string name="label_action_retry">重试</string>
 
@@ -17,6 +36,7 @@
     <string name="label_action_cancel_delete">取消删除</string>
 
     <string name="action_add">添加</string>
+    <string name="action_save">保存</string>
     <string name="action_modify">修改</string>
     <string name="action_search">搜索</string>
     <string name="action_update">更新</string>

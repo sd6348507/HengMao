@@ -4,7 +4,7 @@ class HttpConfig {
 
     companion object {
 
-        const val BASE_URL = "http://180.110.205.196:8170/"
+        const val BASE_URL = "http://59.60.18.154:8762/"
 
         const val URL_PATH = "ajax/ajaxDataServer.aspx"
 
@@ -48,7 +48,7 @@ class HttpConfig {
         const val REQ_TYPE_CPJD_SUBMIT = "AppBuildItem"
 
         // 仓库 查询
-        const val REQ_TYPE_STORAGE_SEARCH = "AppGetStorage"
+        const val REQ_TYPE_STORAGE_SEARCH = "StorageList"
 
         // 货位 查询
         const val REQ_TYPE_HW_SEARCH = "AppGetPostion"
@@ -68,8 +68,8 @@ class HttpConfig {
         // 销售出库单 提交
         const val REQ_TYPE_XSCK_SUBMIT = "SMOut"
 
-        // 盘点入库 条码查询
-        const val REQ_TYPE_PD_CODE_SEARCH = "GetCode"
+        // 条码查询
+        const val REQ_TYPE_CODE_SEARCH = "CodeList"
 
 
 

@@ -11,7 +11,8 @@
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowEnterAnimation">@anim/fade_enter</item>
         <item name="android:windowExitAnimation">@anim/fade_exit</item>
-        <item name="android:actionBarSize">@dimen/dp_56</item>
+        <item name="android:actionBarSize">@dimen/dp_48</item>
+        <item name="android:listDivider">@drawable/bg_divider</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -22,7 +23,7 @@
     <style name="Widget.App.Toolbar" parent="Widget.AppCompat.Toolbar">
         <item name="android:gravity">center</item>
         <item name="buttonGravity">top</item>
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:background">@color/white</item>
         <item name="android:minHeight">?attr/actionBarSize</item>
         <item name="titleMargin">@dimen/dp_4</item>
         <item name="contentInsetStart">@dimen/dp_0</item>
@@ -42,7 +43,15 @@
     <style name="Theme.App.Dialog.NoBackground" parent="Theme.AppCompat.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:backgroundDimAmount">0.35</item>
+    </style>
+
+    <style name="Theme.App.Dialog.Bottom" parent="Theme.App.Dialog.NoBackground">
+        <item name="android:textColorPrimary">@color/color_text_black_primary</item>
+        <item name="android:textColorSecondary">@color/color_text_black_secondary</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowEnterAnimation">@anim/dialog_push_up_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_push_up_out</item>
     </style>
 
     <style name="Theme.App.Dialog.Alert" parent="Theme.App.Dialog.NoBackground">

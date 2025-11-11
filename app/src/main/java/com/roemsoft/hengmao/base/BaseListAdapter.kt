@@ -11,7 +11,7 @@ abstract class BaseListAdapter<T, K: BaseViewHolder> : RecyclerView.Adapter<K>()
 
     var list = arrayListOf<T>()
 
-    var onItemClick: OnItemClickListener? = null
+    open var onItemClick: OnItemClickListener? = null
 
     var onItemChildClick: OnItemChildClickListener? = null
 

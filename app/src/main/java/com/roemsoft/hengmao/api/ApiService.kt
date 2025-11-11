@@ -99,13 +99,6 @@ interface ApiService {
         @Query(HttpConfig.REQ_TYPE) reqType: String = HttpConfig.REQ_TYPE_CUSTOMER_SEARCH
     ): HttpResult<DataSet<Customer>>
 
-    // 获取存货档案
-    // ReqType=Item&ReqStr=ItemNo=;ItemName=;SpecName=;ColorName=
-    @GET(HttpConfig.URL_PATH)
-    suspend fun fetchItem(
-        @Query(HttpConfig.REQ_TYPE) reqType: String = HttpConfig.REQ_TYPE_ITEM_SEARCH,
-        @Query(HttpConfig.REQ_STR) reqStr: String
-    ): HttpResult<DataSet<ItemData>>
 
     // 生成存货档案跟条码
     // ReqType=APPBuildItemCode&ReqStr=ClassId=;ClassNo=;WLQZName=;WLNo=;
@@ -126,24 +119,23 @@ interface ApiService {
         @Field(HttpConfig.REQ_STR) reqStr: String
     ): HttpResult<Any?>
 
-    // 盘点入库 获取条码信息
-    // ReqType=GetCode&ReqStr=CodeNo=202509020001
+    // 获取条码信息
+    // ReqType=CodeList&ReqStr=CodeNo=M25111132000001
     @FormUrlEncoded
     @POST(HttpConfig.URL_PATH)
     suspend fun fetchCodeInfo(
-        @Field(HttpConfig.REQ_TYPE) reqType: String = HttpConfig.REQ_TYPE_PD_CODE_SEARCH,
+        @Field(HttpConfig.REQ_TYPE) reqType: String = HttpConfig.REQ_TYPE_CODE_SEARCH,
         @Field(HttpConfig.REQ_STR) reqStr: String
-    ): HttpResult<DataSet<ItemData>>
+    ): HttpResult<DataSet<CodeData>>
 
-    // 销售出库单 提交
-    // ReqType=SMOut&ReqStr=SaleNo=CK25040001;XTkNo=Z2504100001
+
+    // 获取仓库档案
+    // ReqType=StorageList
     @FormUrlEncoded
     @POST(HttpConfig.URL_PATH)
-    suspend fun xsckSubmit(
-        @Field(HttpConfig.REQ_TYPE) reqType: String = HttpConfig.REQ_TYPE_XSCK_SUBMIT,
-        @Field(HttpConfig.REQ_STR) reqStr: String
-    ): HttpResult<Any?>
-
+    suspend fun loadStorage(
+        @Field(HttpConfig.REQ_TYPE) reqType: String = HttpConfig.REQ_TYPE_STORAGE_SEARCH
+    ): HttpResult<DataSet<Storage>>
 
     /**-------------- 更新 --------------*/
 

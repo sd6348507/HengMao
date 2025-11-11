@@ -2,6 +2,7 @@ package com.roemsoft.hengmao.dialog
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
@@ -10,7 +11,7 @@ import com.roemsoft.hengmao.R
 
 class BottomContainerDialog(val context: Context) {
 
-    private val mDialog by lazy { Dialog(context, R.style.Theme_App_Dialog_Alert) }
+    private val mDialog by lazy { Dialog(context, R.style.Theme_App_Dialog_Bottom) }
 
     var view: (() -> View)? = null
         set(value) {
@@ -26,7 +27,7 @@ class BottomContainerDialog(val context: Context) {
     fun build(): BottomContainerDialog {
         mDialog.apply {
             setCancelable(true)
-            setCanceledOnTouchOutside(false)
+            setCanceledOnTouchOutside(true)
 
             setOnShowListener { onShow?.invoke() }
             setOnDismissListener { onDismiss?.invoke() }

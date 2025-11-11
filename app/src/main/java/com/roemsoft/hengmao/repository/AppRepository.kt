@@ -335,10 +335,10 @@ class AppRepository(private val api: ApiService) {
     }
 
     /**
-     * 盘点入库获取条码信息
-     * ReqStr=CodeNo=202509020001
+     * 获取条码信息
+     * ReqStr=CodeNo=M25111132000001
      */
-    fun fetchCodeInfo(code: String): Flow<RespResult<DataSet<ItemData>>> {
+    fun fetchCodeInfo(code: String): Flow<RespResult<DataSet<CodeData>>> {
         return flow {
             try {
                 val reqStr =
@@ -360,17 +360,12 @@ class AppRepository(private val api: ApiService) {
     }
 
     /**
-     * 获取存货档案
-     * ReqStr=ItemNo=;ItemName=;SpecName=;ColorName=
+     * 获取仓库档案
      */
-    fun fetchItem(no: String, name: String, spec: String, color: String): Flow<RespResult<DataSet<ItemData>>> {
+    fun loadStorage(): Flow<RespResult<DataSet<Storage>>> {
         return flow {
             try {
-                val reqStr = "${HttpConfig.REQ_STR_ITEM_NO}=$no;" +
-                        "${HttpConfig.REQ_STR_NAME}=$name;" +
-                        "${HttpConfig.REQ_STR_SPEC}=$spec;" +
-                        "${HttpConfig.REQ_STR_COLOR}=$color"
-                val resp = api.fetchItem(reqStr = reqStr)
+                val resp = api.loadStorage()
                 if (resp.result == 1) {
                     if (resp.dataSet != null) {
                         emit(RespResult.Success(resp.dataSet))
@@ -385,6 +380,7 @@ class AppRepository(private val api: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
+
 
     fun checkVersion(): Flow<RespResult<UpdateBean>> {
         return flow {

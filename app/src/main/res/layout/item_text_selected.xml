@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="data"
+            type="String" />
+        <variable
+            name="isSelected"
+            type="Boolean" />
+    </data>
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:gravity="center"
+        android:textSize="@dimen/sp_18"
+        android:text="@{data}"
+        android:textColor="@{isSelected ? @color/white : @color/black}"
+        android:background="@{isSelected ? @color/colorPrimary : @color/white}"/>
+
+</layout>

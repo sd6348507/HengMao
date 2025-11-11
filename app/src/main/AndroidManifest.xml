@@ -19,17 +19,15 @@
         android:enableOnBackInvokedCallback="true"
         android:requestLegacyExternalStorage="true"
         tools:targetApi="33">
-        <!--<activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.HengMao">
+        <activity
+            android:name=".ui.part_in.PartInActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>-->
+        </activity>
     </application>
 
 </manifest>

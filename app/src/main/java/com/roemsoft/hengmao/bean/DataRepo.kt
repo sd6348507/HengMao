@@ -175,44 +175,12 @@ data class ColorData(
 /**
  * 仓库
  * {
- *      "StorageId":"7EC44E205CE236BE0E6D80946B886388",
- *      "StorageName":"次品仓"
+ *      "StorageName":"GCU仓"
  * }
  */
 data class Storage(
-    @Json(name = "StorageId") val id: String = "",
     @Json(name = "StorageName") val name: String = ""
-) : Parcelable {
-
-    constructor(parcel: Parcel) : this(
-        parcel.readString() ?: "",
-        parcel.readString() ?: ""
-    )
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(id)
-        parcel.writeString(name)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<Storage> {
-        override fun createFromParcel(parcel: Parcel): Storage {
-            return Storage(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Storage?> {
-            return arrayOfNulls(size)
-        }
-    }
-
-    override fun toString(): String {
-        return "$id:$name"
-    }
-
-}
+)
 
 /**
  * 货位
@@ -335,79 +303,27 @@ data class CkListData(
 }
 
 /**
- * 存货
+ * 条码信息
  * {
- *      "ItemId":"{005345B376094E71B222717BB060499F}",
- *      "ItemNo":"C110001000108",
- *      "ItemName":"ZD-init UMT纹TPU高低温膜(0.2MM TPE胶膜)黑胶 珠光",
- *      "ColorName":"黑色11302",
- *      "SpecName":"0.7MM*135CM",
- *      "UnitName":"Y",
- *      "ItemType":"0",
- *      "MItemId":"{005345B376094E71B222717BB060499F}"
- * }
- */
-data class ItemData(
-    @Json(name = "ItemId") var id: String = "",
-    @Json(name = "ItemNo") val no: String = "",
-    @Json(name = "ItemName") var name: String = "",
-    @Json(name = "ColorName") var color: String = "",
-    @Json(name = "SpecName") var spec: String = "",
-    @Json(name = "UnitName") var unit: String = "",
-    @Json(name = "ItemType") var type: String = "",
-    @Json(name = "MItemId") var mItemId: String = ""
-) : Parcelable {
-
-    constructor(parcel: Parcel) : this(
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: ""
-    )
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(id)
-        parcel.writeString(no)
-        parcel.writeString(name)
-        parcel.writeString(color)
-        parcel.writeString(spec)
-        parcel.writeString(unit)
-        parcel.writeString(type)
-        parcel.writeString(mItemId)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<ItemData> {
-        override fun createFromParcel(parcel: Parcel): ItemData {
-            return ItemData(parcel)
-        }
-
-        override fun newArray(size: Int): Array<ItemData?> {
-            return arrayOfNulls(size)
-        }
-    }
-
-    override fun toString(): String {
-        return "$id:$no:$name:$color:$spec:$unit:$type:$mItemId"
-    }
-
-}
-
-/**
- * 入库条码
- * {
- *      "CodeNo":"QI202508270004"
+ *      "INo":"HJT26Q1010102",
+ *      "ModelNo":"DLN-230915M",
+ *      "BomNo":"AGCW093-4",
+ *      "BarCollectNo":"M25111132000001",
+ *      "SolePartName":"MD",
+ *      "ColorName":"黑色",
+ *      "SizeNo":"6.5",
+ *      "cTn":"32"
  * }
  */
 data class CodeData(
-    @Json(name = "CodeNo") var code: String = ""
+    @Json(name = "INo") var ino: String = "",
+    @Json(name = "ModelNo") val modelNo: String = "",
+    @Json(name = "BomNo") var bomNo: String = "",
+    @Json(name = "BarCollectNo") var barCollectNo: String = "",
+    @Json(name = "SolePartName") var solePartName: String = "",
+    @Json(name = "ColorName") var colorName: String = "",
+    @Json(name = "SizeNo") var sizeNo: String = "",
+    @Json(name = "cTn") var ctn: String = ""
 )
 
 /**
