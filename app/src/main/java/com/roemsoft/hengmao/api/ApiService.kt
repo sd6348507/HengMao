@@ -15,13 +15,13 @@ interface ApiService {
     // 链接 https://www.jianshu.com/p/c9f123c21d82
 
     // 登录
-    // ReqType=AppUserLogin&ReqStr=UserNo=administrator;UserPwd=roemsoft..,..
+    // ReqType=AppUserLogin&ReqStr=UserNo=15059595078;UserPwd=123456
     @FormUrlEncoded
     @POST(HttpConfig.URL_PATH)
     suspend fun login(
         @Field(HttpConfig.REQ_TYPE) reqType: String = HttpConfig.REQ_TYPE_LOGIN,
         @Field(HttpConfig.REQ_STR) reqStr: String
-    ): HttpResult<DataSet<User>>
+    ): HttpResult<Any?>
 
 
     // 获取产品类别
@@ -100,22 +100,30 @@ interface ApiService {
     ): HttpResult<DataSet<Customer>>
 
 
-    // 生成存货档案跟条码
-    // ReqType=APPBuildItemCode&ReqStr=ClassId=;ClassNo=;WLQZName=;WLNo=;
-    //     WLName=;ProductName=;SpecName=;ColorName=;UnitName=;CodeNo=;CodeQty=;Maker=
+    // 配件入库 删除
+    // ReqType=SMBInDel&ReqStr=PDAId=;StorageName=MD仓;CodeNo=M25111132000001;UserName=马荣
     @FormUrlEncoded
     @POST(HttpConfig.URL_PATH)
-    suspend fun fetchRkCode(
-        @Field(HttpConfig.REQ_TYPE) reqType: String = HttpConfig.REQ_TYPE_RK_CODE_SEARCH,
+    suspend fun partInDelete(
+        @Field(HttpConfig.REQ_TYPE) reqType: String = HttpConfig.REQ_TYPE_PART_IN_DELETE,
         @Field(HttpConfig.REQ_STR) reqStr: String
-    ): HttpResult<DataSet<CodeData>>
+    ): HttpResult<Any?>
 
-    // 入库 提交
-    // ReqType=APPStgPostfromQT&ReqStr=StorageId=;HWNo=;Label=;SeasonName=;CustShoeNo=;CodeNo=;Qty=;Maker=
+    // 配件入库 提交
+    // ReqType=SMBIn&ReqStr=PDAId=;StorageName=MD仓;CodeNo=M25111132000001;UserName=马荣
     @FormUrlEncoded
     @POST(HttpConfig.URL_PATH)
-    suspend fun submitRk(
-        @Field(HttpConfig.REQ_TYPE) reqType: String = HttpConfig.REQ_TYPE_RK_SUBMIT,
+    suspend fun partInSubmit(
+        @Field(HttpConfig.REQ_TYPE) reqType: String = HttpConfig.REQ_TYPE_PART_IN_SUBMIT,
+        @Field(HttpConfig.REQ_STR) reqStr: String
+    ): HttpResult<Any?>
+
+    // 配件入库 保存
+    // ReqType=SMBInB&ReqStr=PDAId=;UserName=马荣
+    @FormUrlEncoded
+    @POST(HttpConfig.URL_PATH)
+    suspend fun partInSave(
+        @Field(HttpConfig.REQ_TYPE) reqType: String = HttpConfig.REQ_TYPE_PART_IN_SAVE,
         @Field(HttpConfig.REQ_STR) reqStr: String
     ): HttpResult<Any?>
 

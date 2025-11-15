@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">HengMao</string>
 
-    <string name="label_part_in">配件入库</string>
+    <string name="label_login">登录</string>
+    <string name="label_login_username_hint">请输入手机号或者工号</string>
+    <string name="label_login_password_hint">请输入密码</string>
+
+    <string name="label_part_in">配件入库扫描</string>
 
     <string name="label_code">条码号</string>
     <string name="label_storage">仓库</string>

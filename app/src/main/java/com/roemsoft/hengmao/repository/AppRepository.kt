@@ -15,13 +15,13 @@ class AppRepository(private val api: ApiService) {
 
     private val io = Dispatchers.IO
 
-    fun login(username: String, password: String): Flow<RespResult<Any>> {
+    fun login(username: String, password: String): Flow<RespResult<String>> {
         return flow {
             try {
                 val reqStr = "${HttpConfig.REQ_STR_USER_NO}=$username;${HttpConfig.REQ_STR_USER_PW}=$password"
                 val resp = api.login(reqStr = reqStr)
                 if (resp.result == 1) {
-                    emit(RespResult.Success(Unit))
+                    emit(RespResult.Success(resp.msg))
                 } else {
                     emit(RespResult.Failure(resp.msg))
                 }
@@ -164,38 +164,6 @@ class AppRepository(private val api: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    /**
-     * 产品建档 提交
-     * ReqStr=ClassId=;ClassNo=;WLQZName=;WLNo=;WLName=;ProductName=;
-     * ItemName=;SpecName=;ColorName=;UnitName=;Maker=
-     */
-    fun submitCpjd(categoryId: String, categoryNo: String, wlqz: String, wlNo: String, wlName: String, product: String,
-                           name: String, spec: String, color: String, unit: String, maker: String): Flow<RespResult<Any?>> {
-        return flow {
-            try {
-                val reqStr = "${HttpConfig.REQ_STR_CATEGORY_ID}=$categoryId;" +
-                        "${HttpConfig.REQ_STR_CATEGORY_NO}=$categoryNo;" +
-                        "${HttpConfig.REQ_STR_WLQZ}=$wlqz;" +
-                        "${HttpConfig.REQ_STR_WL_NO}=$wlNo;" +
-                        "${HttpConfig.REQ_STR_WL_NAME}=$wlName;" +
-                        "${HttpConfig.REQ_STR_PRODUCT_NAME}=$product;" +
-                        "${HttpConfig.REQ_STR_NAME}=$name;" +
-                        "${HttpConfig.REQ_STR_SPEC}=$spec;" +
-                        "${HttpConfig.REQ_STR_COLOR}=$color;" +
-                        "${HttpConfig.REQ_STR_UNIT}=$unit;" +
-                        "${HttpConfig.REQ_STR_MAKER}=$maker"
-                val resp = api.submitCpjd(reqStr = reqStr)
-                if (resp.result == 1) {
-                    emit(RespResult.Success(Unit))
-                } else {
-                    emit(RespResult.Failure(resp.msg))
-                }
-            } catch (e: Exception) {
-                emit(RespResult.Error(e))
-            }
-        }.flowOn(Dispatchers.IO)
-    }
-
 
     /**
      * 获取仓库
@@ -266,34 +234,19 @@ class AppRepository(private val api: ApiService) {
     }
 
     /**
-     * 生成存货档案跟条码
-     * ReqStr=ClassId=;ClassNo=;WLQZName=;WLNo=;WLName=;ProductName=;
-     * ItemName=;SpecName=;ColorName=;UnitName=;CodeNo=;CodeQty=;Maker=
+     * 配件入库 删除
+     * ReqStr=PDAId=;StorageName=MD仓;CodeNo=M25111132000001;UserName=马荣
      */
-    fun fetchRkCode(categoryId: String, categoryNo: String, wlqz: String, wlNo: String, wlName: String, product: String,
-                    name: String, spec: String, color: String, unit: String, code: String, qty: String, maker: String): Flow<RespResult<DataSet<CodeData>>> {
+    fun partInDelete(pdaId: String, storageName: String, code: String, user: String): Flow<RespResult<Any?>> {
         return flow {
             try {
-                val reqStr = "${HttpConfig.REQ_STR_CATEGORY_ID}=$categoryId;" +
-                        "${HttpConfig.REQ_STR_CATEGORY_NO}=$categoryNo;" +
-                        "${HttpConfig.REQ_STR_WLQZ}=$wlqz;" +
-                        "${HttpConfig.REQ_STR_WL_NO}=$wlNo;" +
-                        "${HttpConfig.REQ_STR_WL_NAME}=$wlName;" +
-                        "${HttpConfig.REQ_STR_PRODUCT_NAME}=$product;" +
-                        "${HttpConfig.REQ_STR_NAME}=$name;" +
-                        "${HttpConfig.REQ_STR_SPEC}=$spec;" +
-                        "${HttpConfig.REQ_STR_COLOR}=$color;" +
-                        "${HttpConfig.REQ_STR_UNIT}=$unit;" +
+                val reqStr = "${HttpConfig.REQ_STR_PDA_ID}=$pdaId;" +
+                        "${HttpConfig.REQ_STR_STORAGE_NAME}=$storageName;" +
                         "${HttpConfig.REQ_STR_CODE}=$code;" +
-                        "${HttpConfig.REQ_STR_QTY}=$qty;" +
-                        "${HttpConfig.REQ_STR_MAKER}=$maker"
-                val resp = api.fetchRkCode(reqStr= reqStr)
+                        "${HttpConfig.REQ_STR_USER_NAME}=$user"
+                val resp = api.partInDelete(reqStr= reqStr)
                 if (resp.result == 1) {
-                    if (resp.dataSet != null) {
-                        emit(RespResult.Success(resp.dataSet))
-                    } else {
-                        emit(RespResult.Error(ApiException("缺少必要的[DataSet]参数")))
-                    }
+                    emit(RespResult.Success(Unit))
                 } else {
                     emit(RespResult.Failure(resp.msg))
                 }
@@ -304,25 +257,38 @@ class AppRepository(private val api: ApiService) {
     }
 
     /**
-     * 入库 提交
-     * ReqStr=StorageId=;HWNo=;CustomerName=;Label=;SeasonName=季度;
-     * CustShoeNo=;CodeNo=QI202508270006;CodeQty=32;Maker=administrator
+     * 配件入库 提交
+     * ReqStr=PDAId=;StorageName=MD仓;CodeNo=M25111132000001;UserName=马荣
      */
-    fun submitRk(storageId: String, hwNo: String, customer: String, brand: String, session: String,
-                 model: String, code: String, qty: String, jm: String, maker: String): Flow<RespResult<Any?>> {
+    fun partInSubmit(pdaId: String, storage: String, code: String, user: String): Flow<RespResult<Any?>> {
         return flow {
             try {
-                val reqStr = "${HttpConfig.REQ_STR_STORAGE_ID}=$storageId;" +
-                        "${HttpConfig.REQ_STR_HW_NO}=$hwNo;" +
-                        "${HttpConfig.REQ_STR_CUSTOMER}=$customer;" +
-                        "${HttpConfig.REQ_STR_BRAND}=$brand;" +
-                        "${HttpConfig.REQ_STR_SEASON}=$session;" +
-                        "${HttpConfig.REQ_STR_MODEL}=$model;" +
+                val reqStr = "${HttpConfig.REQ_STR_PDA_ID}=$pdaId;" +
+                        "${HttpConfig.REQ_STR_STORAGE_NAME}=$storage;" +
                         "${HttpConfig.REQ_STR_CODE}=$code;" +
-                        "${HttpConfig.REQ_STR_QTY}=$qty;" +
-                        "${HttpConfig.REQ_STR_JM}=$jm;" +
-                        "${HttpConfig.REQ_STR_MAKER}=$maker"
-                val resp = api.submitRk(reqStr = reqStr)
+                        "${HttpConfig.REQ_STR_USER_NAME}=$user"
+                val resp = api.partInSubmit(reqStr = reqStr)
+                if (resp.result == 1) {
+                    emit(RespResult.Success(Unit))
+                } else {
+                    emit(RespResult.Failure(resp.msg))
+                }
+            } catch (e: Exception) {
+                emit(RespResult.Error(e))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    /**
+     * 配件入库 保存
+     * ReqStr=PDAId=;UserName=马荣
+     */
+    fun partInSave(pdaId: String, user: String): Flow<RespResult<Any?>> {
+        return flow {
+            try {
+                val reqStr = "${HttpConfig.REQ_STR_PDA_ID}=$pdaId;" +
+                        "${HttpConfig.REQ_STR_USER_NAME}=$user"
+                val resp = api.partInSave(reqStr = reqStr)
                 if (resp.result == 1) {
                     emit(RespResult.Success(Unit))
                 } else {

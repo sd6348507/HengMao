@@ -11,6 +11,7 @@
     <color name="color_text_black_secondary">#888888</color>
     <color name="text_red_primary">#FF4433</color>
     <color name="text_hint">#C7C7C7</color>
+    <color name="stroke">#FFCCCCCC</color>
 
     <color name="gray_300">#e0e0e0</color>
     <color name="gray_400">#bdbdbd</color>
@@ -31,7 +32,7 @@
     <color name="blue">#2196f3</color>
     <color name="light_blue">#03a9f4</color>
     <color name="light_blue_2">#FF6DBAE3</color>
-    <color name="light_blue_3">#4423c9ff</color>
+    <color name="light_blue_3">#FF6DBAE3</color>
     <color name="cyan">#00bcd4</color>
     <color name="teal">#009688</color>
     <color name="green">#4caf50</color>

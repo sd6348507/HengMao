@@ -10,7 +10,7 @@ import com.roemsoft.hengmao.databinding.DialogProgressbarBinding
 
 class ProgressBarDialog(context: Context) {
 
-    private val mDialog by lazy { Dialog(context, R.style.Theme_App_Dialog_Alert) }
+    private val mDialog by lazy { Dialog(context, R.style.Theme_App_Dialog_NoBackground) }
     private val mDialogViewBinding by lazy { DialogProgressbarBinding.inflate(LayoutInflater.from(context), null, false) }
  //   private val mDialogView by lazy { LayoutInflater.from(context).inflate(R.layout.dialog_progressbar, null, false) }
 

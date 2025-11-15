@@ -5,6 +5,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
@@ -22,6 +23,7 @@ import com.roemsoft.hengmao.databinding.DialogPickStorageBinding
 import com.roemsoft.hengmao.dialog.BottomContainerDialog
 import com.roemsoft.hengmao.dialog.bottomContainerDialog
 import com.roemsoft.hengmao.dialog.showAlertDialog
+import com.roemsoft.hengmao.dialog.showInfoDialog
 import com.roemsoft.hengmao.dpToPx
 import com.roemsoft.hengmao.showSoftKeyboard
 import com.roemsoft.hengmao.widget.MarginItemDecoration
@@ -51,6 +53,20 @@ class PartInActivity : DataBindingAppCompatActivity() {
 
     @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     override fun initView() {
+        onBackPressedDispatcher.addCallback {
+            if (viewModel.needSave()) {
+                showInfoDialog {
+                    title = "保存提示"
+                    content = "数据还未保存，系统将自动保存!"
+                    onConfirm = {
+                        viewModel.save()
+                    }
+                }
+            } else {
+                finish()
+            }
+        }
+
         storageDialog = bottomContainerDialog {
             view = {
                 bottomDialogBinding.list.apply {
@@ -79,20 +95,21 @@ class PartInActivity : DataBindingAppCompatActivity() {
             viewModel.loadStorage()
         }
 
-        /*mBinding.submitBtn.onSingleClick {
-            viewModel.submit()
-        }*/
+        mBinding.labelSave.onSingleClick {
+            viewModel.save()
+        }
 
         mBinding.codeSearchBtn.onSingleClick {
-            viewModel.fetchCodeInfo()
+            viewModel.fetchCodeInfoAndSubmit()
         }
 
         mBinding.codeEt.setOnEditorActionListener { v, actionId, event ->
             Timber.tag("Key Listener").i("===> edit: $actionId, $event <===")
-            if (actionId == EditorInfo.IME_ACTION_DONE && event != null &&
+            if ((actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_UNSPECIFIED) &&
+                event != null &&
                 event.action == KeyEvent.ACTION_DOWN &&
                 event.keyCode == KeyEvent.KEYCODE_ENTER) {
-                viewModel.fetchCodeInfo()
+                viewModel.fetchCodeInfoAndSubmit()
                 Timber.tag("Key Listener").i("===> code: ${mBinding.codeEt.text} <===")
             //    viewModel.code.value = ""
             //    mBinding.codeEt.setText("")
@@ -132,6 +149,13 @@ class PartInActivity : DataBindingAppCompatActivity() {
             }
         }
 
+        viewModel.showInfoDialog.observe(this) { msg ->
+            showInfoDialog {
+                title = "提示"
+                content = msg
+            }
+        }
+
         viewModel.showDeleteDialog.observe(this) { code ->
             showAlertDialog {
                 title = "删除"
@@ -150,6 +174,7 @@ class PartInActivity : DataBindingAppCompatActivity() {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        Timber.tag("Key Listener").i("===> key code: $keyCode, $event <===")
         if (keyCode == App.KEY_SCAN_LEFT || keyCode == App.KEY_SCAN_RIGHT) {
             viewModel.code.value = ""
             mBinding.codeEt.requestFocus()

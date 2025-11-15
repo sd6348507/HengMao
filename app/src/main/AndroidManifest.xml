@@ -20,7 +20,7 @@
         android:requestLegacyExternalStorage="true"
         tools:targetApi="33">
         <activity
-            android:name=".ui.part_in.PartInActivity"
+            android:name=".ui.login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.part_in.PartInActivity" />
     </application>
 
 </manifest>

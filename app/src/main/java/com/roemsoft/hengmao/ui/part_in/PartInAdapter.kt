@@ -23,6 +23,13 @@ class PartInAdapter : BaseListAdapter<CodeData, PartInAdapter.PartInViewHolder>(
         }
     }
 
+    fun deleteCode(code: String) {
+        val index = list.indexOfFirst { it.barCollectNo == code }
+        if (index >= 0) {
+            deleteData(index)
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PartInViewHolder {
         return PartInViewHolder.from(parent)
     }

@@ -15,8 +15,8 @@ open class App : Application() {
     companion object {
         const val TAG = "HengMao"
 
-        const val KEY_SCAN_LEFT = KeyEvent.KEYCODE_BUTTON_2
-        const val KEY_SCAN_RIGHT = KeyEvent.KEYCODE_BUTTON_3
+        const val KEY_SCAN_LEFT = 622 // KeyEvent.KEYCODE_BUTTON_2
+        const val KEY_SCAN_RIGHT = 623 //KeyEvent.KEYCODE_BUTTON_3
 
         var userCode: String? = null    // 登录工号
 

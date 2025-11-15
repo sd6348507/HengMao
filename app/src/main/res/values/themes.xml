@@ -13,6 +13,7 @@
         <item name="android:windowExitAnimation">@anim/fade_exit</item>
         <item name="android:actionBarSize">@dimen/dp_48</item>
         <item name="android:listDivider">@drawable/bg_divider</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_left_arrow</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -50,14 +51,13 @@
         <item name="android:textColorPrimary">@color/color_text_black_primary</item>
         <item name="android:textColorSecondary">@color/color_text_black_secondary</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
-        <item name="android:windowEnterAnimation">@anim/dialog_push_up_in</item>
-        <item name="android:windowExitAnimation">@anim/dialog_push_up_out</item>
+        <item name="android:windowAnimationStyle">@style/DialogBottomAnim</item>
     </style>
 
     <style name="Theme.App.Dialog.Alert" parent="Theme.App.Dialog.NoBackground">
         <item name="android:textColorPrimary">@color/color_text_black_primary</item>
         <item name="android:textColorSecondary">@color/color_text_black_secondary</item>
-        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowAnimationStyle">@style/DialogAlertAnim</item>
     </style>
 
     <style name="Theme.App.Dialog.Wait" parent="Theme.App.Dialog.NoBackground">

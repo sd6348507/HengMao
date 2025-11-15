@@ -59,11 +59,14 @@ class HttpConfig {
         // 存货档案 查询
         const val REQ_TYPE_ITEM_SEARCH = "Item"
 
-        // 生成存货档案跟条码
-        const val REQ_TYPE_RK_CODE_SEARCH = "APPBuildItemCode"
+        // 配件入库 删除
+        const val REQ_TYPE_PART_IN_DELETE = "SMBInDel"
 
-        // 入库 提交
-        const val REQ_TYPE_RK_SUBMIT = "APPStgPostfromQT"
+        // 配件入库 提交
+        const val REQ_TYPE_PART_IN_SUBMIT = "SMBIn"
+
+        // 配件入库 保存
+        const val REQ_TYPE_PART_IN_SAVE = "SMBInB"
 
         // 销售出库单 提交
         const val REQ_TYPE_XSCK_SUBMIT = "SMOut"
@@ -80,12 +83,11 @@ class HttpConfig {
         // 用户密码
         const val REQ_STR_USER_PW = "UserPwd"
 
-        // 产品类别Id
-        const val REQ_STR_CATEGORY_ID = "ClassId"
-        // 产品类别编码
-        const val REQ_STR_CATEGORY_NO = "ClassNo"
-        // 纹路前缀
-        const val REQ_STR_WLQZ = "WLQZName"
+        const val REQ_STR_PDA_ID = "PDAId"
+        // 用户
+        const val REQ_STR_USER_NAME = "UserName"
+        // 仓库
+        const val REQ_STR_STORAGE_NAME = "StorageName"
         // 纹路编码
         const val REQ_STR_WL_NO = "WLNo"
         // 纹路名称
